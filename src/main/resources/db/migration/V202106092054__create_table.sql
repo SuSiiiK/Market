@@ -1,7 +1,3 @@
-create database shop;
-
-drop table product;
-
 CREATE TABLE `shop`.`product` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
