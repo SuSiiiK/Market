@@ -11,6 +11,8 @@ import javax.validation.constraints.*;
 
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name="orders")
 public class Order {
     @Id

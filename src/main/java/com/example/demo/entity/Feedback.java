@@ -8,6 +8,8 @@ import javax.validation.constraints.*;
 
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "feedbacks")
 public class Feedback {
     @Id

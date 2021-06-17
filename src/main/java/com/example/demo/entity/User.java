@@ -10,6 +10,9 @@ import javax.validation.constraints.*;
 
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Table(name = "users")
 public class User {
     @Id
@@ -26,11 +29,6 @@ public class User {
     @Size(min = 4 , max = 10, message = "Please write password between 4 and 10 symbols.")
     private String password;
 
-    @OneToMany(mappedBy = "user")
-    private List<@NotNull Product> products;
-    @OneToMany(mappedBy = "user")
-    private List<@NotNull Order> orders;
-    @OneToMany(mappedBy = "user")
-    private List<@NotNull Feedback> feedbacks;
+
 
 }

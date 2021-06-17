@@ -10,6 +10,8 @@ import java.util.List;
 
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name="products")
 public class Product {
     @Id
@@ -31,12 +33,9 @@ public class Product {
     @Positive
     private int price;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
     @NotNull
     private Category category;
-    @ManyToOne
-    @NotNull
-    private User user;
-    @OneToMany(mappedBy = "product")
-    private List<@NotNull Order> orders;
+
 }
