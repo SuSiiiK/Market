@@ -47,7 +47,7 @@ public class ProductController {
                                                @RequestParam("page") Integer page,
                                                @RequestParam("size") Integer size){
         Pageable pageable = PageRequest.of(page, size);
-        return productService.getAllProductsByQuantity(price, pageable);
+        return productService.getAllProductsByPrice(price, pageable);
     }
 }
 
