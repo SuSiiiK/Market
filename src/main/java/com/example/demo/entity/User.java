@@ -5,30 +5,43 @@ import lombok.*;
 
 
 import javax.persistence.*;
-import java.util.List;
 import javax.validation.constraints.*;
 
 @Data
 @Entity
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
 @NoArgsConstructor
 @Builder
 @Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    @NotNull(message = "Please write your name.")
-    @NotBlank(message = "Please write name not only with spaces.")
-    private String name;
+    private Integer id;
 
     @Email(message = "Please write right syntax of your email.")
+    @NotBlank(message = "Please write name not only with spaces.")
+    @Size(min = 1, max = 128, message = "dasd")
+    @Column(length = 128)
     private String email;
 
-    @Size(min = 4 , max = 10, message = "Please write password between 4 and 10 symbols.")
+    @NotBlank
+    @Size(min = 8, max = 128, message = "Please write password between 4 and 10 symbols.")
+    @Column(length = 128)
     private String password;
 
+    @NotBlank(message = "Please write name not only with spaces.")
+    @Size(min = 1, max = 128, message = "dasd")
+    @Column(length = 128)
+    private String fullname;
 
+    @Column
+    @Builder.Default
+    private boolean enabled = true;
+
+    @NotBlank
+    @Size(min = 1, max = 128, message = "dasd")
+    @Column(length = 128)
+    @Builder.Default
+    private String role = "USER";
 
 }
