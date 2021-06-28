@@ -1,5 +1,3 @@
-<#import "partials/main.ftlh" as main />
-
 
 <!doctype html>
 <html lang="en">
@@ -14,21 +12,18 @@
 
 <div class="login-page">
     <div class="form">
-        <form class="login-form" action="/user/login" method="post">
+        <form class="login-form" action="/changePass" method="post">
             <#if _csrf??>
                 <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
             </#if>
-
-            <input type="text" name="username" placeholder="Your-Email" value="${(form.email)!''}"
-                   autofocus>
+            <p>${tok.token}</p>
+            <input type="text" name="token" placeholder="Token" value="${(form.token)!''}">
+            <input type="text" name="email" placeholder="Your-Email" value="${(form.email)!''}">
             <input type="text" name="password" placeholder="You-Password" value="">
-            <button>LogIn</button>
-            <p class="message">NotRegist <a
-                        href="/user/register">CreateAccount</a></p>
-            <p class="message">ForgotPass <a
-                        href="/forgotpass">ResetPassword</a></p>
-            <p class="message">MainPage <a href="/">Main</a></p>
+            <button>Change</button>
+            <p class="message">MainPage<a href="/">MainPage</a></p>
         </form>
+
     </div>
 </div>
 </body>
