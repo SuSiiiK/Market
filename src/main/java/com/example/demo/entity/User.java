@@ -16,7 +16,7 @@ import javax.validation.constraints.*;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Email(message = "Please write right syntax of your email.")
     @NotBlank(message = "Please write name not only with spaces.")
@@ -32,7 +32,7 @@ public class User {
     @NotBlank(message = "Please write name not only with spaces.")
     @Size(min = 1, max = 128, message = "dasd")
     @Column(length = 128)
-    private String fullname;
+    private String userName;
 
     @Column
     @Builder.Default

@@ -16,7 +16,7 @@ import java.util.List;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @NotNull(message = "Please write name of the product.")
     @NotBlank(message = "Please write right name of the product.")
@@ -25,17 +25,19 @@ public class Product {
     @NotNull(message = "Please download an image of the product.")
     private String image;
 
+
+    @NotBlank
+    @Size(min = 10, max = 240)
     private String description;
 
-    @PositiveOrZero
+    @Positive
     private int quantity;
 
     @Positive
-    private int price;
+    private double price;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "category_id")
-    @NotNull
     private Category category;
 
 }

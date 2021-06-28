@@ -14,16 +14,20 @@ import javax.validation.constraints.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="orders")
+@Builder
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
-    @ManyToOne
-    @NotNull
-    private User user;
+    private String name;
+    private String address;
+    private String tel;
 
-    @ManyToOne
-    @NotNull
-    private Product product;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "basket_id", referencedColumnName = "id")
+    private Basket basket;
+
+    private double total;
 }

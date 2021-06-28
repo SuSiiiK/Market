@@ -6,26 +6,21 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
-@ToString
 @Data
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@EqualsAndHashCode
 @Table(name="categories")
 public class Category {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
-    @NotNull(message = "Please write name of the category")
-    @NotBlank(message = "Please write right name of the category. Not only with spaces.")
+    @NotBlank
+    @Size(min = 3, max = 128)
     private String name;
 
-    @OneToMany(mappedBy = "category",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
-    private List<Product> products;
+    @OneToMany(mappedBy = "category")
+    @OrderBy("name ASC")
+    List<Product> products;
 }
