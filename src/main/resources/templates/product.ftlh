@@ -1,3 +1,4 @@
+<#import "/spring.ftl" as spring>
 
 <#import "partials/main.ftlh" as main/>
 
@@ -8,9 +9,9 @@
             <div class="card-body">
                 <h5 class="card-title">${product.name}</h5>
                 <p class="card-text">${product.description}</p>
-                <p class="card-text">Price: ${product.price} Som</p>
-                <p class="card-text">Quantity: ${product.quantity}</p>
-                <p class="card-text">Category: ${product.category.name}</p>
+                <p class="card-text">${product.price}<@spring.message "Som"/></p>
+                <p class="card-text">${product.quantity}<@spring.message "Qty"/></p>
+                <p class="card-text">${product.category.name}<@spring.message "Type"/></p>
             </div>
 
             <div>
@@ -23,7 +24,7 @@
                         </#if>
                         <div>
                             <input type="hidden" name="productId" value="${product.id}">
-                            <button type="submit">Add to basket</button>
+                            <button type="submit"><@spring.message "AddToBasket"/></button>
                         </div>
                     </form>
 
@@ -37,13 +38,13 @@
 
                             <div>
                                 <label class="flex flex-v-center">
-                                    <input type="text" name="text" placeholder="text">
+                                    <input type="text" name="text" placeholder=<@spring.message "text"/>>
                                 </label>
                             </div>
                             <div>
                                 <input type="hidden" name="productId" value="${product.id}">
-                                <button type="submit">Add review</button>
-                            </div>
+                                <button type="submit"><@spring.message "AddReview"/></button>
+                                </div>
                         </form>
                     </#if>
                 </#if>

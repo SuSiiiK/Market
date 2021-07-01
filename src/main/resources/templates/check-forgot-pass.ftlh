@@ -1,3 +1,4 @@
+<#import "/spring.ftl" as spring>
 
 <!doctype html>
 <html lang="en">
@@ -17,12 +18,29 @@
                 <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
             </#if>
             <p>${tok.token}</p>
-            <input type="text" name="token" placeholder="Token" value="${(form.token)!''}">
-            <input type="text" name="email" placeholder="Your-Email" value="${(form.email)!''}">
-            <input type="text" name="password" placeholder="You-Password" value="">
-            <button>Change</button>
-            <p class="message">MainPage<a href="/">MainPage</a></p>
+            <input type="text" name="token" placeholder=<@spring.message"Token"/> value="${(form.token)!''}">
+            <input type="text" name="email" placeholder=<@spring.message"Your-Email"/> value="${(form.email)!''}">
+            <input type="text" name="password" placeholder=<@spring.message"You-Password"/> value="">
+            <button><@spring.message"button.language-change.text"/></button>
+            <p class="message"><@spring.message"MainPage"/>? <a href="/"><@spring.message"MainPage"/></a></p>
         </form>
+
+        <div style="padding-top: 15px">
+            <form action="" method="get" class="my-3">
+                <label for="lang_select">
+                    <@spring.message "label.language" />:
+                </label>
+                <select name="lang" id="lang_select">
+                    <option value="">Default</option>
+                    <option value="" disabled>----------</option>
+                    <option value="en-US">American English</option>
+                    <option value="ru-RU">Русский</option>
+                </select>
+                <button type="submit">
+                    <@spring.message "button.language-change.text" />
+                </button>
+            </form>
+        </div>
 
     </div>
 </div>

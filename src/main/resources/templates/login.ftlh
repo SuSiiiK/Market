@@ -1,5 +1,7 @@
-<#import "partials/main.ftlh" as main />
 
+<#import "/spring.ftl" as spring>
+
+<#import "partials/main.ftlh" as main />
 
 <!doctype html>
 <html lang="en">
@@ -23,12 +25,29 @@
                    autofocus>
             <input type="text" name="password" placeholder="You-Password" value="">
             <button>LogIn</button>
-            <p class="message">NotRegist <a
-                        href="/user/register">CreateAccount</a></p>
-            <p class="message">ForgotPass <a
-                        href="/forgotpass">ResetPassword</a></p>
-            <p class="message">MainPage <a href="/">Main</a></p>
+            <p class="message"><@spring.message"NotRegist"/>? <a
+                        href="/user/register"><@spring.message"CreateAccount"/></a></p>
+            <p class="message"><@spring.message"ForgotPass"/>? <a
+                        href="/forgotpass"><@spring.message"ResetPassword"/></a></p>
+            <p class="message"><@spring.message"MainPage"/>? <a href="/"><@spring.message"Main"/></a></p>
         </form>
+
+        <div style="padding-top: 15px">
+            <form action="" method="get" class="my-3">
+                <label for="lang_select">
+                    <@spring.message "label.language" />:
+                </label>
+                <select name="lang" id="lang_select">
+                    <option value="">Default</option>
+                    <option value="" disabled>----------</option>
+                    <option value="en-US">American English</option>
+                    <option value="ru-RU">Русский</option>
+                </select>
+                <button type="submit">
+                    <@spring.message "button.language-change.text" />
+                </button>
+            </form>
+        </div>
     </div>
 </div>
 </body>

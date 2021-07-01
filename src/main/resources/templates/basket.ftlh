@@ -1,7 +1,8 @@
+<#import "/spring.ftl" as spring>
 
 <#import "partials/main.ftlh" as main/>
 
-<@main.renderWith>
+<@main.renderWith >
 
     <div class="container">
         <div class="card-group">
@@ -13,9 +14,9 @@
                             <div class="card-body">
                                 <h5 class="card-title">${product.product.name}</h5>
                                 <p class="card-text">${product.product.description}</p>
-                                <p class="card-text">Price: ${product.product.price} Som</p>
-                                <p class="card-text">Quantity: ${product.product.quantity}</p>
-                                <p class="card-text">Category: ${product.product.category.name}</p>
+                                <p class="card-text"><@spring.message "Som"/> ${product.product.price} Som</p>
+                                <p class="card-text"><@spring.message"Qty"/> ${product.product.quantity}</p>
+                                <p class="card-text"><@spring.message"Type"/> ${product.product.category.name}</p>
                             </div>
                             <form action="/basket/delete" method="post">
 
@@ -25,7 +26,7 @@
                                 </#if>
                                 <div>
                                     <input type="hidden" name="productId" value="${product.product.id}">
-                                    <button type="submit">DeletefromBasket</button>
+                                    <button type="submit"><@spring.message "DeletefromBasket"/></button>
                                 </div>
                             </form>
                         </div>
@@ -43,24 +44,24 @@
 
                 <div>
                     <label class="flex flex-v-center">
-                        <p class="label-input-text">Ordering</p>
-                        <input type="text" name="name" placeholder="Your-name" value="${(form.name)!''}">
+                        <p class="label-input-text"><@spring.message "Ordering"/></p>
+                        <input type="text" name="name" placeholder=<@spring.message"Your-name"/> value="${(form.name)!''}">
                     </label>
                 </div>
                 <div>
                     <label class="flex flex-v-center">
-                        <input type="text" name="address" placeholder="Your-Email" value="${(form.address)!''}">
+                        <input type="text" name="address" placeholder=<@spring.message"Your-Email"/> value="${(form.address)!''}">
                     </label>
                 </div>
                 <div>
                     <label class="flex flex-v-center">
-                        <input type="text" name="tel" placeholder="Your-phone-Number" value="${(form.tel)!''}">
+                        <input type="text" name="tel" placeholder=<@spring.message"Your-phone-Number"/> value="${(form.tel)!''}">
                     </label>
                 </div>
-                <p>Total : ${form.total} Som </p>
+                <p><@spring.message"Total"/> : ${form.total} <@spring.message"Som"/> </p>
                 <div>
-                    <input type="hidden" name="total" value="${form.total}">
-                    <button type="submit">Order</button>
+                    <input type="hidden" name="total" value=${form.total}>
+                    <button type="submit"><@spring.message"Order"/></button>
                 </div>
             </form>
         </div>
