@@ -1,111 +1,68 @@
-create table categories
-(
-    id   bigint auto_increment
-        primary key,
-    name varchar(255) null
-) ;
-
-
-CREATE TABLE `users` (
-                         id        bigint not null auto_increment unique
-                             primary key,
-                         email     varchar(255) null,
-                         enabled   bit          null,
-                         password  varchar(255) null,
-                         role      varchar(128) null,
-                         user_name varchar(255) null
+CREATE TABLE categories (
+                            id BIGSERIAL PRIMARY KEY,
+                            name VARCHAR(255)
 );
 
-
-
-
-create table products
-(
-    id           bigint auto_increment
-        primary key ,
-    description varchar(255),
-    image       varchar(255) not null,
-    name        varchar(255) not null,
-    price       double      not null,
-    quantity    integer      not null,
-    category_id bigint      not null,
-    constraint FKteg3f0l6cndtbn3nsbr1tmxcl
-        foreign key (category_id) references categories (id)
+CREATE TABLE users (
+                       id BIGSERIAL PRIMARY KEY,
+                       email VARCHAR(255),
+                       enabled BOOLEAN,
+                       password VARCHAR(255),
+                       role VARCHAR(128),
+                       user_name VARCHAR(255)
 );
 
-
-create table reviews
-(
-    id      bigint       not null  auto_increment unique primary key ,
-    date    date         null,
-    name    varchar(255) null,
-    product_id bigint       null,
-    user_id bigint       null,
-    constraint FK81nkg9op14w8c6hw7f25f029i
-        foreign key (product_id) references products (id),
-    constraint FKcgy7qjc1r99dp117y9en6lxye
-        foreign key (user_id) references users (id)
-
+CREATE TABLE products (
+                          id BIGSERIAL PRIMARY KEY,
+                          description VARCHAR(255),
+                          image VARCHAR(255) NOT NULL,
+                          name VARCHAR(255) NOT NULL,
+                          price DOUBLE PRECISION NOT NULL,
+                          quantity INTEGER NOT NULL,
+                          category_id BIGINT NOT NULL,
+                          CONSTRAINT FKteg3f0l6cndtbn3nsbr1tmxcl FOREIGN KEY (category_id) REFERENCES categories (id)
 );
 
-
-
-create table baskets
-(
-    id      bigint       not null auto_increment
-        primary key,
-    session varchar(255) null,
-    user_id bigint       null,
-    constraint FK87s17cinc4wkx0taas5nh0s8h
-        foreign key (user_id) references users (id)
-
+CREATE TABLE reviews (
+                         id BIGSERIAL PRIMARY KEY,
+                         date DATE,
+                         name VARCHAR(255),
+                         product_id BIGINT,
+                         user_id BIGINT,
+                         CONSTRAINT FK81nkg9op14w8c6hw7f25f029i FOREIGN KEY (product_id) REFERENCES products (id),
+                         CONSTRAINT FKcgy7qjc1r99dp117y9en6lxye FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
-
-create table basket_products
-(
-    id        bigint not null  auto_increment
-        primary key,
-    qty       int    null,
-    basket_id bigint null,
-    product_id   bigint null,
-    constraint FKlomoboid5pugq7ajp2kvqe5id
-        foreign key (basket_id) references baskets (id),
-    constraint FKs86tjrwd3ex57i294fpntxuc6
-        foreign key (product_id) references products (id)
-
+CREATE TABLE baskets (
+                         id BIGSERIAL PRIMARY KEY,
+                         session VARCHAR(255),
+                         user_id BIGINT,
+                         CONSTRAINT FK87s17cinc4wkx0taas5nh0s8h FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
-create table orders
-(
-    id        bigint auto_increment primary key ,
-    address   varchar(255) null,
-    name      varchar(255) null,
-    tel       varchar(255) null,
-    basket_id bigint       null,
-    total     double       null,
-    constraint FKkeq4ha3u9m7f5nv9wqyk4lnap
-        foreign key (basket_id) references baskets (id)
+CREATE TABLE basket_products (
+                                 id BIGSERIAL PRIMARY KEY,
+                                 qty INTEGER,
+                                 basket_id BIGINT,
+                                 product_id BIGINT,
+                                 CONSTRAINT FKlomoboid5pugq7ajp2kvqe5id FOREIGN KEY (basket_id) REFERENCES baskets (id),
+                                 CONSTRAINT FKs86tjrwd3ex57i294fpntxuc6 FOREIGN KEY (product_id) REFERENCES products (id)
 );
 
-
-create table tokens
-(
-    id       bigint auto_increment,
-    token    varchar(255) null,
-    users_id bigint       null,
-    constraint tokens_id_uindex
-        unique (id),
-    constraint FKl50lok37qf2734u04knlj57ct
-        foreign key (users_id) references users (id)
-
+CREATE TABLE orders (
+                        id BIGSERIAL PRIMARY KEY,
+                        address VARCHAR(255),
+                        name VARCHAR(255),
+                        tel VARCHAR(255),
+                        basket_id BIGINT,
+                        total DOUBLE PRECISION,
+                        CONSTRAINT FKkeq4ha3u9m7f5nv9wqyk4lnap FOREIGN KEY (basket_id) REFERENCES baskets (id)
 );
 
-# alter table basket_products add constraint FKlomoboid5pugq7ajp2kvqe5id foreign key (basket_id) references baskets (id);
-# alter table basket_products add constraint FKco87gmll53y8fpmmhli974xag foreign key (product_id) references products (id);
-# alter table baskets add constraint FK87s17cinc4wkx0taas5nh0s8h foreign key (user_id) references users (id);
-# alter table orders add constraint FKkeq4ha3u9m7f5nv9wqyk4lnap foreign key (basket_id) references baskets (id);
-# alter table products add constraint FKog2rp4qthbtt2lfyhfo32lsw9 foreign key (category_id) references categories (id);
-# alter table reviews add constraint FKpl51cejpw4gy5swfar8br9ngi foreign key (product_id) references products (id);
-# alter table reviews add constraint FKcgy7qjc1r99dp117y9en6lxye foreign key (user_id) references users (id);
-# alter table tokens add constraint FKl50lok37qf2734u04knlj57ct foreign key (users_id) references users (id);
+CREATE TABLE tokens (
+                        id BIGSERIAL PRIMARY KEY,
+                        token VARCHAR(255),
+                        users_id BIGINT,
+                        CONSTRAINT tokens_id_uindex UNIQUE (id),
+                        CONSTRAINT FKl50lok37qf2734u04knlj57ct FOREIGN KEY (users_id) REFERENCES users (id)
+);

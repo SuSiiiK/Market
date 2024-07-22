@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <style>
+    .product-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .product-card {
+      width: 30%;
+      margin-bottom: 20px;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .product-card h3, .product-card p, .product-card button {
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+<div class="product-grid">
+  <div class="product-card">
+    <img src="product1.jpg" alt="Product 1">
+    <h3>Product 1</h3>
+    <p>Description of Product 1</p>
+    <button>Add to Cart</button>
+  </div>
+  <div class="product-card">
+    <img src="product2.jpg" alt="Product 2">
+    <h3>Product 2</h3>
+    <p>Description of Product 2</p>
+    <button>Add to Cart</button>
+  </div>
+  <div class="product-card">
+    <img src="product3.jpg" alt="Product 3">
+    <h3>Product 3</h3>
+    <p>Description of Product 3</p>
+    <button>Add to Cart</button>
+  </div>
+</div>
+</body>
+</html>
