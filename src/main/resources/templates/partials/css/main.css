@@ -1,0 +1,42 @@
+.body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to right, #ff6b6b, #ffa500, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff);
+    background-size: 400% 400%;
+    /*animation: gradient 30s ease alternate-reverse;*/
+}
+
+
+.navigation {
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #333;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-nav .nav-link {
+    color: #333;
+    font-weight: bold;
+}
+
+.header-logo img {
+    max-width: 100px;
+}
+
+.form-control, .form-select {
+    border-radius: 20px;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btn-warning {
+    background-color: darkorange;
+    border-color: #ffc107;
+    color: #333;
+    border-radius: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
+    border-color: #d39e00;
+}

@@ -13,12 +13,14 @@ import com.example.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -100,6 +102,20 @@ public class ProductController {
             model.addAttribute("not authorized", true);
         }
         return "index";
+    }
+    @GetMapping("/products")
+    public String getProductsByCategory(@RequestParam String category,
+                                        @RequestParam(defaultValue = "1") Integer page,
+                                        Model model) {
+        Pageable pageable = PageRequest.of(page - 1, 10); // Пример: 10 продуктов на страницу
+        Page<Product> productPage = productService.getByType(pageable, category);
+
+        model.addAttribute("products", productPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", productPage.getTotalPages());
+        model.addAttribute("category", category);
+
+        return "partials/main"; // Имя шаблона для отображения продуктов
     }
 }
 

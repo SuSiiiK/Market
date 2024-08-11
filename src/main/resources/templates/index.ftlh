@@ -1,304 +1,207 @@
 <#import "/spring.ftl" as spring>
-
 <#import "partials/main.ftlh" as main/>
-<@main.renderWith>
+
+<@main.renderWith title="Главная - MI SHOP" dir="ltr">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
         .container {
-            margin: 0 auto;
-            max-width: 1000px;
-
-            /*padding: 0 20px;*/
-            width: 100%;
-
+            padding-top: 30px;
         }
 
-        .cards {
-            padding: 75px 0;
+        .hero-section {
+            background: linear-gradient(135deg, #6e5baa); /* Фиолетовый градиент */
+            color: #fff;
+            padding: 60px 0;
+            text-align: center;
+            margin-bottom: 40px;
         }
 
-        .container_cards {
+        .hero-section h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
 
+        .hero-section p {
+            font-size: 1.1rem;
+        }
+
+        .single-card {
             display: flex;
-            /* Автоматически заполняем на всю ширину grid-контейнера */
-            grid-template-columns: repeat(auto-fill, 225px);
+            flex-direction: column;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            color: #333;
+        }
+
+        .single-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .img-area {
+            position: relative;
             width: 100%;
-            flex-wrap: wrap;
-            /*justify-content: space-between;*/
-
-            max-width: 1000px; /* Ширина grid-контейнера */
-            justify-content: center;
-            justify-items: center; /* Размещаем карточку по центру */
-            column-gap: 30px; /* Отступ между колонками */
-            row-gap: 40px; /* Отступ между рядами */
-            margin: 0 auto;
-
-        }
-
-        .card-group {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            margin: -10px;
-        }
-
-        .card {
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            padding: 16px;
-            margin: 16px;
-            width: 200px;
-            height: 250px;
-        }
-
-        /*.card:hover {*/
-        /*    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);*/
-        /*}*/
-
-        .card-body {
-            padding: 20px;
-        }
-
-        .card-title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .card-image {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 4px;
-        }
-
-        .card-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin-top: 12px;
-        }
-
-
-        .card-text {
-            font-size: 1rem;
-            color: #6c757d;
-            margin-bottom: 10px;
-        }
-
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-        }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
-        }
-
-        /*.add-to-basket-container {*/
-        /*    display: flex;*/
-        /*    justify-content: center;*/
-        /*    margin-top: 1rem;*/
-        /*}*/
-
-        .add-to-basket-form {
-            display: flex;
-            align-items: center;
-        }
-
-        .add-to-basket-form .form-group {
-            margin-right: 1rem;
-        }
-
-        .add-to-basket-form .form-control {
-            width: 80px;
-            height: 40px;
-            font-size: 1rem;
-            padding: 0.5rem;
-            border: 1px solid #ced4da;
-            border-radius: 0.25rem;
-        }
-
-        .add-to-basket-form .btn {
-            height: 40px;
-            font-size: 1rem;
-            padding: 0.5rem 1rem;
-        }
-
-        /*-----*/
-        /*.cards {*/
-        /*    background-color: #f8f9fa;*/
-        /*    padding: 50px 0;*/
-        /*}*/
-
-        /*.container_cards {*/
-        /*    display: flex;*/
-        /*    justify-content: center;*/
-        /*}*/
-
-        /*.card-group {*/
-        /*    display: grid;*/
-        /*    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));*/
-        /*    grid-gap: 30px;*/
-        /*}*/
-        .container {
-            padding-top: 50px;
-        }
-        .card {
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            height: 200px;
             overflow: hidden;
         }
-        /*.card {*/
-        /*    border: none;*/
-        /*    border-radius: 10px;*/
-        /*    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
-        /*    transition: transform 0.3s ease;*/
-        /*}*/
 
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card-img-top {
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-            /*height: 200px;*/
+        .img-area img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
+            transition: transform 0.3s ease;
         }
 
-        .card-body {
-            padding: 1.5rem;
+        .img-area:hover img {
+            transform: scale(1.05);
         }
 
-        .card-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 174, 255, 0.8);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            text-align: center;
+            padding: 10px;
         }
 
-        .card-text {
-            font-size: 0.9rem;
-            color: #6c757d;
-            margin-bottom: 0.5rem;
+        .single-card:hover .overlay {
+            opacity: 1;
         }
 
-        .card-footer {
-            background-color: #f8f9fa;
-            border-top: none;
-            padding: 1rem 1.5rem;
-            border-bottom-left-radius: 10px;
-            border-bottom-right-radius: 10px;
+        .add-to-card, .view-details {
+            background-color: #fff;
+            color: #000;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            margin: 5px;
         }
 
-
-        .btn-warning {
-            color: #212529;
-            background-color: #ffc107;
-            border-color: #ffc107;
+        .add-to-card:hover, .view-details:hover {
+            background-color: darkorange;
+            color: #fff;
+            border: none;
         }
 
-
-
-        .btn-primary {
-            background-color: #ff9800;
-            border-color: #ff9800;
+        .info {
+            padding: 15px;
+            text-align: center;
+            color: #333;
+            flex-grow: 1; /* Заполняет доступное пространство */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
-        .form-control {
-            border-radius: 5px;
-            font-size: 0.9rem;
+        .info h3 {
+            margin: 10px 0;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
         }
 
+        .info .price {
+            margin: 10px 0;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #6e5baa;
+        }
 
+        .pagination {
+            margin: 20px 0;
+        }
 
+        .page-item.active .page-link {
+            background-color: #007bff;
+            border-color: #007bff;
+            color: #fff;
+        }
 
+        .page-link {
+            border-radius: 0;
+        }
+
+        .page-link, .page-link:hover {
+            color: #007bff;
+            background-color: #fff;
+            border: 1px solid #007bff;
+        }
+
+        .page-item {
+            margin: 0 2px;
+        }
+
+        /* Адаптивные стили для изображений */
+        @media (max-width: 767px) {
+            .img-area {
+                height: 150px; /* Уменьшить высоту на маленьких экранах */
+            }
+            .info h3 {
+                font-size: 1rem;
+            }
+            .info .price {
+                font-size: 1rem;
+            }
+        }
     </style>
-<#--    <section class="cards">-->
-<#--        <div class="container container_cards" style="padding-top: 50px;">-->
-<#--            <div class="card-group">-->
-<#--                <#list products as product>-->
-<#--                    <div class="card">-->
-<#--                        <!-- Верхняя часть &ndash;&gt;-->
-<#--                        <div class="card__top">-->
-<#--                            <!-- Изображение-ссылка товара &ndash;&gt;-->
-<#--                            <a href="#" class="card__image">-->
-<#--                                <img src="${product.image}" class="card-img-top" alt="${product.name}">-->
-<#--                            </a>-->
-<#--                            <!-- Скидка на товар &ndash;&gt;-->
-<#--                            <div class="card__label">-10%</div>-->
-<#--                        </div>-->
-<#--                        <!-- Нижняя часть &ndash;&gt;-->
-<#--                        <div class="card__bottom">-->
-<#--                            <!-- Цены на товар (с учетом скидки и без)&ndash;&gt;-->
-<#--                            <div class="card__prices">-->
-<#--                                <p class="card__price card__price--common">${product.price} <@spring.message "Som"/></p>-->
-<#--                            </div>-->
-<#--                            <!-- Ссылка-название товара &ndash;&gt;-->
-<#--                            <a href="#" class="card__title">-->
-<#--                                <h5 class="card-title">${product.name}</h5>-->
-<#--                            </a>-->
-<#--                            <#if user??>-->
-<#--                                <form action="/basket/add" method="post" class="add-to-basket-form">-->
-<#--                                    <#if _csrf??>-->
-<#--                                        <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}" />-->
-<#--                                    </#if>-->
-<#--                                    <div class="form-group">-->
-<#--                                        <input type="hidden" name="productId" value="${product.id}">-->
-<#--                                        <input type="number" name="qty" class="form-control" placeholder="<@spring.message 'Qty'/>">-->
-<#--                                    </div>-->
-<#--                                    <button type="submit" class="card__add" style="color: black; background-color: orange"><@spring.message "AddToBasket"/></button>-->
-<#--                                </form>-->
-<#--                            </#if>-->
-<#--                        </div>-->
-<#--                    </div>-->
-<#--                </#list>-->
-<#--            </div>-->
-<#--        </div>-->
-<#--    </section>-->
 
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1>Добро пожаловать в MY SHOP!</h1>
+            <p>Откройте для себя наш широкий ассортимент товаров и специальные предложения.</p>
+            <a href="/products" class="btn #4a00e0 color btn-lg">Просмотреть товары</a>
+        </div>
+    </section>
 
-<#--    </div>-->
-    <div class="container" style="padding-top: 50px">
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
             <#list products as product>
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card h-100 w-100">
-                        <img src="${product.image}" class="card-img-top img-fluid" alt="${product.name}">
-                        <div class="card-body">
-                            <h5 class="card-title">${product.name}</h5>
-                            <p class="card-text">${product.description}</p>
-                            <p class="card-text">
-                                <span class="fw-bold">${product.price}</span> <@spring.message "Som"/>
-                            </p>
-                            <p class="card-text">
-                                <span class="fw-bold">${product.quantity}</span> <@spring.message "Qty"/>
-                            </p>
-                        </div>
-                        <div class="card-footer">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <a href="/product/${product.id}" class="btn btn-warning">
-                                    <@spring.message "info"/>
-                                </a>
-                                <#if user??>
-                                    <form action="/basket/add" method="post" class="add-to-basket-form">
-                                        <#if _csrf??>
-                                            <input type="hidden" name="${(_csrf.parameterName)!'csrf'}"
-                                                   value="${(_csrf.token)!'--no-token--'}"/>
-                                        </#if>
-                                        <div class="form-group">
-                                            <input type="hidden" name="productId" value="${product.id}">
-                                            <input type="number" name="qty" class="form-control"
-                                                   placeholder="<@spring.message 'Qty'/>">
-                                        </div>
-                                        <button type="submit" class="btn btn-primary"
-                                                style="background-color: orange; color: black;">
-                                            <@spring.message "AddToBasket"/>
-                                        </button>
-                                    </form>
-                                </#if>
+                <div class="col d-flex">
+                    <div class="single-card d-flex flex-column">
+                        <div class="img-area">
+                            <img src="${product.image}" alt="${product.name}">
+                            <div class="overlay">
+                                <button class="add-to-card">Add to card</button>
+                                <button class="view-details" data-bs-toggle="modal" data-bs-target="#productModal"
+                                        data-product-id="${product.id}" data-product-name="${product.name}"
+                                        data-product-image="${product.image}"
+                                        data-product-description="${product.description}"
+                                        data-product-price="${product.price}"
+                                        data-product-quantity="${product.quantity}">
+                                    View Details
+                                </button>
                             </div>
+                        </div>
+                        <div class="info">
+                            <h3>${product.name}</h3>
+                            <p class="price">${product.price} <@spring.message "Som"/></p>
+                            <#-- <p>${product.description?truncate(100)}</p> -->
                         </div>
                     </div>
                 </div>
@@ -306,68 +209,59 @@
         </div>
     </div>
 
-    <div class="pagination-container">
-        <nav aria-label="Page navigation">
-            <ul class="pagination">
-                <#list 1..pages as x>
-                    <li class="page-item">
-                        <a class="page-link" href="?page=${x}">${x}</a>
-                    </li>
-                </#list>
-            </ul>
-        </nav>
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+            <#list 1..pages as x>
+                <li class="page-item ">
+                    <a class="page-link" href="?page=${x}">${x}</a>
+                </li>
+            </#list>
+        </ul>
+    </nav>
+
+    <!-- Modal Template -->
+    <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="productModalLabel">Product Title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="" class="img-fluid mb-3" alt="Product Image">
+                    <p>Product description goes here...</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Add to Cart</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <style>
-        .pagination-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var productModal = document.getElementById('productModal');
+            productModal.addEventListener('show.bs.modal', function (event) {
+                var button = event.relatedTarget; // Button that triggered the modal
+                var productId = button.getAttribute('data-product-id');
+                var productName = button.getAttribute('data-product-name');
+                var productImage = button.getAttribute('data-product-image');
+                var productDescription = button.getAttribute('data-product-description');
+                var productPrice = button.getAttribute('data-product-price');
+                var productQuantity = button.getAttribute('data-product-quantity');
 
-        .pagination {
-            display: flex;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
+                var modalTitle = productModal.querySelector('.modal-title');
+                var modalBody = productModal.querySelector('.modal-body');
 
-        .page-item {
-            margin: 0 5px;
-        }
-
-        .page-link {
-            display: block;
-            padding: 10px 15px;
-            text-decoration: none;
-            color: #333;
-            background-color: #f2f2f2;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        .page-link:hover {
-            background-color: #ddd;
-        }
-
-        .page-item.active .page-link {
-            background-color: #007bff;
-            color: #fff;
-        }
-    </style>
-
-<#--    <script>-->
-<#--        // Добавляем обработчики событий для кликов на страницы-->
-<#--        document.querySelectorAll('.page-link').forEach(link => {-->
-<#--            link.addEventListener('click', (event) => {-->
-<#--                event.preventDefault();-->
-<#--                const page = event.target.textContent;-->
-<#--                // Здесь вы можете добавить код для обновления содержимого страницы-->
-<#--                console.log(`Переход на страницу ${pages}`);-->
-<#--            });-->
-<#--        });-->
-<#--    </script>-->
+                modalTitle.textContent = productName;
+                modalBody.innerHTML = '<img src="' + productImage + '" class="img-fluid mb-3" alt="Product Image">' +
+                    '<p>' + productDescription + '</p>' +
+                    '<p><strong>Price:</strong> ' + productPrice + '</p>' +
+                    '<p><strong>Quantity:</strong> ' + productQuantity + '</p>';
+            });
+        });
+    </script>
 </@main.renderWith>
-
-
 
