@@ -6,11 +6,9 @@ import com.example.demo.form.AddingProductToBasketForm;
 import com.example.demo.form.OrderForm;
 import com.example.demo.repositories.OrderRepo;
 import com.example.demo.repositories.ReviewRepo;
-import com.example.demo.service.BasketProductService;
-import com.example.demo.service.BasketService;
-import com.example.demo.service.ProductService;
-import com.example.demo.service.UserService;
+import com.example.demo.service.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindException;
@@ -75,34 +73,44 @@ public class BasketController {
         session.removeAttribute(Constants.CART_ID);
         session.setAttribute(Constants.CART_ID, basketService.findBySession(session.getId()));
 
-        return "redirect:/";
+        return "redirect:/product/list";
     }
+
+    @Autowired
+    private EmailService emailService;
+
 
     @GetMapping()
     public String showBasket(Principal principal, HttpSession session, Model model) {
         var user = userService.getByEmail(principal.getName());
-
+        try {
+            model.addAttribute("user", user);
+        } catch (NullPointerException ex) {
+            model.addAttribute("not authorized", true);
+        }
         if (basketService.findBySession(session.getId()) == null) {
-            throw new ResourceNotFoundException("Basket is Empty");
+//            throw new ResourceNotFoundException("Basket is Empty");
+            return "index";
         }
         Basket bySession = basketService.findBySession(session.getId());
 
-
         List<BasketProduct> products = bySession.getProducts();
 
-        double total = 0;
-        for (BasketProduct b :
-                bySession.getProducts()) {
-            total = total + b.getProduct().getPrice() * b.getQty();
-        }
+        double total = products.stream()
+                .mapToDouble(basketProduct -> basketProduct.getProduct().getPrice() * basketProduct.getQty())
+                .sum();
 
         basketService.save(bySession);
         model.addAttribute("products", products);
-        model.addAttribute("user, user");
-        model.addAttribute("form", new OrderForm(total));
+        model.addAttribute("user", user);
+
+        // Передаем итоговую стоимость в OrderForm
+        OrderForm orderForm = new OrderForm();
+        orderForm.setTotal(total); // Убедитесь, что у вас есть метод setTotal в OrderForm
+        model.addAttribute("form", orderForm);
+
         return "basket";
     }
-
 
     @PostMapping("/delete")
     public String deletefromBasket(@Valid AddingProductToBasketForm form, BindingResult bindingResult, Principal principal, HttpSession session) throws BindException {
@@ -132,37 +140,58 @@ public class BasketController {
         session.removeAttribute(Constants.CART_ID);
         session.setAttribute(Constants.CART_ID, basketService.findBySession(session.getId()));
 
-        return "redirect:/";
+        return "redirect:/"; // Перенаправляем на страницу корзины
     }
 
     @PostMapping("/order")
-    public String makeOrder(@Valid OrderForm orderForm, BindingResult bindingResult, HttpSession session) throws BindException {
+    public String makeOrder(@Valid OrderForm orderForm, BindingResult bindingResult,
+                            HttpSession session, Principal principal) throws BindException {
 
-        if (bindingResult.hasFieldErrors()) {
+        // Проверка валидации формы
+        if (bindingResult.hasErrors()) {
             throw new BindException(bindingResult);
         }
-        Basket basket;
-        try {
-            basket = basketService.findBySession(session.getId());
-        } catch (ResourceNotFoundException e) {
-            throw new ResourceNotFoundException("There is nit such basket");
-        }
 
+        // Получение корзины из сессии
+        Basket basket = basketService.findBySession(session.getId());
         if (basket == null) {
-            throw new ResourceNotFoundException("There is not such basket");
+            throw new ResourceNotFoundException("Корзина пуста");
         }
 
+        // Получение email пользователя
+        var user = userService.getByEmail(principal.getName());
+
+        // Получение общей суммы из корзины
+        double total = basket.getProducts().stream()
+                .mapToDouble(basketProduct -> basketProduct.getProduct().getPrice() * basketProduct.getQty())
+                .sum();
+
+        // Создание заказа
         Order order = Order.builder()
                 .address(orderForm.getAddress())
                 .name(orderForm.getName())
                 .tel(orderForm.getTel())
                 .basket(basket)
-                .total(orderForm.getTotal())
+                .total(total)  // Используем вычисленную сумму
                 .build();
         orderRepository.save(order);
-        return "redirect:/basket/review";
-    }
 
+        // Отправка email-уведомлений
+        try {
+            emailService.sendOrderConfirmationEmail(
+                    user.getEmail(),
+                    orderForm.getName(),
+                    orderForm.getAddress(),
+                    orderForm.getTel(),
+                    total  // Отправляем total как double
+            );
+        } catch (Exception e) {
+            // Логирование ошибки отправки email
+            System.err.println("Ошибка отправки email: " + e.getMessage());
+        }
+
+        return "redirect:/basket";
+    }
 
     @GetMapping("/review")
     public String getRewiewPage(Principal principal, Model model) {
@@ -187,23 +216,27 @@ public class BasketController {
     @PostMapping("/review")
     public String getReview(Principal principal, @RequestParam Long productId, @RequestParam String text) {
         var user = userService.getByEmail(principal.getName());
+
         if (!productService.existById(productId)) {
-            throw new ResourceNotFoundException("There is not such food");
+            throw new ResourceNotFoundException("There is not such product");
         }
+
         if (text.isEmpty() || text.isBlank()) {
             throw new ResourceNotFoundException("Review input is empty");
         }
-        Product byId = productService.getById(productId);
 
-        ReviewForProduct r = ReviewForProduct.builder()
+        Product product = productService.getById(productId);
+
+        ReviewForProduct review = ReviewForProduct.builder()
                 .name(text)
-                .product(byId)
+                .product(product)
                 .date(LocalDate.now())
                 .user(user)
                 .build();
 
-        reviewRepo.save(r);
-        String m = String.format("redirect:/product/%s", byId.getId());
-        return m;
+        reviewRepo.save(review);
+
+        // Перенаправление на страницу продукта
+        return String.format("redirect:/product/%s", product.getId());
     }
 }

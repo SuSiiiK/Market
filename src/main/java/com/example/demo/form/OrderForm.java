@@ -10,20 +10,28 @@ import javax.validation.constraints.Positive;
 @Setter
 public class OrderForm {
 
-    @NotBlank
+    @NotBlank(message = "Имя не может быть пустым")
     private String name = "";
 
-    @NotBlank
+    @NotBlank(message = "Адрес не может быть пустым")
     private String address = "";
 
-    @NotBlank(message = "error")
+    @NotBlank(message = "Телефон не может быть пустым")
     private String tel = "";
 
-
-    @Positive
+//    @Positive(message = "Сумма должна быть положительной")
     private double total;
 
+    // Пустой конструктор
+    public OrderForm() {}
+
+    // Конструктор с общей суммой
     public OrderForm(double total) {
         this.total = total;
     }
+
+    // Конструктор с форматированием строки
+//    public OrderForm(String total) {
+//        this.total = Double.parseDouble(total.replace(" ", ""));
+//    }
 }

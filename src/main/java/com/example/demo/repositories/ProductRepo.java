@@ -17,5 +17,6 @@ public interface ProductRepo extends JpaRepository<Product,Long> {
     List<Product> findAllByCategory(Category category);
 
     Page<Product> findAllByDescriptionContaining(@NotBlank String description, Pageable pageable);
+
 }
 

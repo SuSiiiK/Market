@@ -58,6 +58,8 @@ public class UserController {
         return "login";
     }
 
+
+
     @GetMapping("/user/profile")
     public String pageCustomerProfile(Model model, Principal principal) {
         var user = userService.getByEmail(principal.getName());

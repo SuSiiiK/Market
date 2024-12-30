@@ -1,4 +1,3 @@
-
 <#import "/spring.ftl" as spring>
 
 <#import "partials/main.ftlh" as main />
@@ -9,23 +8,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-<#--    <link rel="stylesheet" href="login.css">-->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-            background: linear-gradient(to right, #ff6b6b, #ffa500, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff);
-            background-size: 400% 400%;
-            animation: gradient 30s ease alternate-reverse;
+            background-color: #f0f0f0; /* Светлый фон */
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
         }
-
 
         .login-container {
             width: 400px;
-            margin: 115px auto;
             background-color: white;
             padding: 30px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #333;
         }
 
         .login-form {
@@ -41,26 +48,36 @@
             display: block;
             font-weight: bold;
             margin-bottom: 5px;
+            color: #555;
         }
 
         input[type="text"], input[type="password"] {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
+            height: 40px; /* Увеличиваем высоту поля */
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus, input[type="password"]:focus {
+            border-color: #ff5722; /* Цвет акцента Xiaomi */
+            outline: none;
         }
 
         .login-btn {
-            background-color: darkorange;
+            background-color: #ff5722; /* Цвет акцента Xiaomi */
             color: white;
             padding: 10px 20px;
             border: none;
-            border-radius: 3px;
+            border-radius: 5px;
             cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
         }
 
         .login-btn:hover {
-            color: #666;
+            background-color: #e64a19; /* Темнее при наведении */
         }
 
         .form-footer {
@@ -71,11 +88,10 @@
         .message {
             font-size: 14px;
             color: #666;
-            /*color: orangered;*/
         }
 
         .message a {
-            color: orangered;
+            color: #ff5722; /* Цвет акцента Xiaomi */
             text-decoration: none;
         }
 
@@ -85,7 +101,31 @@
 
         .language-selector {
             margin-top: 20px;
-            text-align: center;
+        }
+
+        .language-selector label {
+            margin-right: 10px;
+        }
+
+        .language-selector select {
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-right: 5px;
+        }
+
+        .language-selector button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ff5722; /* Цвет акцента Xiaomi */
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .language-selector button:hover {
+            background-color: #e64a19; /* Темнее при наведении */
         }
     </style>
 </head>
@@ -104,12 +144,21 @@
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" placeholder="Your-Password">
         </div>
-        <button  type="submit" class="login-btn">Log In</button>
+            <button type="submit" class="login-btn">Log In</button>
     </form>
     <div class="form-footer">
-        <p class="message"><@spring.message"NotRegist"/>? <a href="/user/register"><@spring.message"CreateAccount"/></a></p>
-        <p class="message"><@spring.message"ForgotPass"/>? <a href="/forgotpass"><@spring.message"ResetPassword"/></a></p>
-        <p class="message"><@spring.message"MainPage"/>? <a href="/"><@spring.message"Main"/></a></p>
+        <p class="message">
+            <@spring.message "NotRegist"/>?
+            <a href="/user/register"><@spring.message "CreateAccount"/></a>
+        </p>
+        <p class="message">
+            <@spring.message "ForgotPass"/>?
+            <a href="/forgotpass"><@spring.message "ResetPassword"/></a>
+        </p>
+        <p class="message">
+            <@spring.message "MainPage"/>?
+            <a href="/"><@spring.message "Main"/></a>
+        </p>
     </div>
     <div class="language-selector">
         <form action="" method="get" class="my-3">
@@ -124,11 +173,13 @@
         </form>
     </div>
 </div>
-<script >// Обработка изменения языка
+<script>
+    // Обработка изменения языка
     const langSelect = document.getElementById('lang_select');
     langSelect.addEventListener('change', () => {
         const selectedLang = langSelect.value;
         window.location.search = `?lang=${selectedLang}`;
-    });</script>
+    });
+</script>
 </body>
 </html>

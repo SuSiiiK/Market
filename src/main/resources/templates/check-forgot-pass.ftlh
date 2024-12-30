@@ -8,10 +8,9 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <style>
-
         body {
             font-family: 'Roboto', sans-serif;
-            background: linear-gradient(to right, #ff6b6b, #ffa500, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff);
+            background: #f0f0f0;
             background-size: 400% 400%;
             animation: gradient 30s ease alternate-reverse;
             /*background-color: #f8f9fa;*/
@@ -50,7 +49,7 @@
             font-family: "Roboto", sans-serif;
             text-transform: uppercase;
             outline: 0;
-            background: darkorange;
+            background: #ff5722;
             margin-top: 5px;
             width: 100%;
             border: 0;
@@ -71,14 +70,14 @@
             font-size: 12px;
         }
         .form .message a {
-            color: darkorange;
+            color: #ff5722;
             text-decoration: none;
         }
         .form .register-form {
             display: none;
         }
         .form .button-submit{
-            background-color: darkorange;
+            background-color: #ff5722;
         }
 
     </style>

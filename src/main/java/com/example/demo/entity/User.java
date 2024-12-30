@@ -20,7 +20,7 @@ public class User {
 
     @Email(message = "Please write right syntax of your email.")
     @NotBlank(message = "Please write name not only with spaces.")
-    @Size(min = 1, max = 128, message = "dasd")
+    @Size(min = 1, max = 128)
     @Column(length = 128)
     private String email;
 
@@ -30,7 +30,7 @@ public class User {
     private String password;
 
     @NotBlank(message = "Please write name not only with spaces.")
-    @Size(min = 1, max = 128, message = "dasd")
+    @Size(min = 1, max = 128)
     @Column(length = 128)
     private String userName;
 
@@ -39,7 +39,7 @@ public class User {
     private boolean enabled = true;
 
     @NotBlank
-    @Size(min = 1, max = 128, message = "dasd")
+    @Size(min = 1, max = 128)
     @Column(length = 128)
     @Builder.Default
     private String role = "USER";

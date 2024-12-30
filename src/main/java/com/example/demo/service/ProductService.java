@@ -22,8 +22,12 @@ public class ProductService {
     public Page<Product> getByName(Pageable pageable, String text) {
         return productRepo.findAllByNameContaining(text, pageable);
     }
+    public List<Product> findAll() {
 
-    public Page<Product> getByType(Pageable pageable, String text) {
+        return productRepo.findAll(); // Fetch all products from the database
+
+    }
+        public Page<Product> getByType(Pageable pageable, String text) {
         List<Product> products = new ArrayList<>();
         List<Category> categories = categoryRepo.findAllByNameContaining(text);
 
